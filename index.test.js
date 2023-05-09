@@ -1,7 +1,5 @@
 const request = require("supertest");
 const app = require('./server');
-const { exportAllDeclaration } = require("@babel/types");
-const { expect } = require("@jest/globals");
 
 
 describe('Test My app server', () => {
