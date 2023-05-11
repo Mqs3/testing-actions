@@ -6,12 +6,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Use Node.js') {
-            steps {
-                sh 'nvm install 14.x'
-                sh 'nvm use 14.x'
-            }
-        }
+        
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -20,6 +15,12 @@ pipeline {
             }
         }
         
+        stage('Use Node.js') {
+            steps {
+                sh 'nvm install 14.x'
+                sh 'nvm use 14.x'
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh 'npm ci'
