@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD',
+                        envVarPrefix: 'DOCKER_'
+                    )
+                ]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                }
+            }
+        }
+        stage('Use Node.js') {
+            steps {
+                sh 'nvm install 14.x'
+                sh 'nvm use 14.x'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+        stage('Run unit tests') {
+            steps {
+                sh 'npm run test'
+            }
+        }
+        stage('Build and publish Docker image') {
+            when {
+                expression { currentBuild.result == 'SUCCESS' }
+            }
+            steps {
+                sh 'docker build -t $DOCKER_USERNAME/myapp:${env.GIT_COMMIT} .'
+                sh 'docker push $DOCKER_USERNAME/myapp:${env.GIT_COMMIT}'
+            }
+        }
+    }
+}
