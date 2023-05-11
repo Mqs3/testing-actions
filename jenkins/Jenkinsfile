@@ -34,8 +34,8 @@ pipeline {
                 expression { currentBuild.result == 'SUCCESS' }
             }
             steps {
-                sh 'docker build -t $DOCKER_USERNAME/myapp:${env.GIT_COMMIT} .'
-                sh 'docker push $DOCKER_USERNAME/myapp:${env.GIT_COMMIT}'
+                sh 'docker build -t $DOCKER_USERNAME/myapp2:${env.GIT_COMMIT} .'
+                sh 'docker push $DOCKER_USERNAME/myapp2:${env.GIT_COMMIT}'
             }
         }
     }
