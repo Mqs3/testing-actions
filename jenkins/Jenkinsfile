@@ -9,8 +9,8 @@ pipeline {
         
         stage('Use Node.js') {
             steps {
-                node{
-                    sh 'npm --version'
+                nodejs(nodeJSInstallationName: 'Node 14.x', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
                 }
             }
         }
