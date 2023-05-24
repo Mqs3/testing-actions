@@ -9,8 +9,9 @@ pipeline {
         
         stage('Use Node.js') {
             steps {
-                nodejs(nodeJSInstallationName: 'Node 14.x', configId: '<config-file-provider-id>') {
-                    sh 'npm config ls'
+                withNPM(npmrcConfig:'my-custom-npmrc') {
+                    echo "Performing npm build..."
+                    sh 'npm install'
                 }
             }
         }
