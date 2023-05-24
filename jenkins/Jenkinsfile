@@ -10,9 +10,8 @@ pipeline {
         stage('Use Node.js') {
             steps {
                 script{
-                sh 'nvm install 14.x'
-                sh 'nvm use 14.x'
-                }
+                    sh 'npm install'
+                    sh 'npm test' 
             }
         }
 
