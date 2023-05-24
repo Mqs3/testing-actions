@@ -12,37 +12,9 @@ pipeline {
                 script{
                     sh 'npm install'
                     sh 'npm test' 
-            }
-        }
-
-        stage('Login to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                 }
             }
         }
-
-        
-        stage('Install dependencies') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-        stage('Run unit tests') {
-            steps {
-                sh 'npm run test'
-            }
-        }
-
-        stage('Build and publish Docker image') {
-            when {
-                expression { currentBuild.result == 'SUCCESS' }
-            }
-            steps {
-                sh 'docker build -t $DOCKER_USERNAME/myapp2:${env.GIT_COMMIT} .'
-                sh 'docker push $DOCKER_USERNAME/myapp2:${env.GIT_COMMIT}'
-            }
-        }
     }
+
 }
