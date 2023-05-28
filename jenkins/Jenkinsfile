@@ -1,8 +1,5 @@
 pipeline {
-    agent docker {
-        registryUrl 'https://hub.docker.com/'
-        registryCredentialsId 'docker-login'
-    }
+    agent any
 
     stages {
         stage('Login to Docker Hub') {  
