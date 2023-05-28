@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                withTool(DockerInstalation) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                docker.withRegistry('https://docker.com/', 'docker-login') {
+                git '…'
+                docker.build('myapp').push('latest')
                 }
-                
             }
         }
         
