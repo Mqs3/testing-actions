@@ -1,20 +1,15 @@
 pipeline {
-    agent testing{
-        stages {
-            stage('npm-build') {
-                steps {
-                nodejs(nodeJSInstallationName: 'Node 17.x', configId: '<config-file-provider-id>') {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                nodejs(nodeJSInstallationName: 'NodeInstalation') {
                     sh 'npm config ls'
                     sh 'npm --version'
                 }
 
-                steps{
-                    sh 'npm --version'
-                    sh 'node --version'
-                }
             }
         }
-        
     }
-
 }
