@@ -6,8 +6,8 @@ pipeline {
             steps {
                 // Construir a imagem Docker
                 script {
-                    docker.withRegistry('https://seu-registro-docker.com', 'credenciais-do-registro') {
-                    def dockerImage = docker.build('nome-da-imagem:tag', './caminho/do/Dockerfile')
+                    docker.withRegistry('https://hub.docker.com/', 'docker-login') {
+                    def dockerImage = docker.build('testing:actions', './Dockerfile')
                     dockerImage.push()
                     }
                 }
