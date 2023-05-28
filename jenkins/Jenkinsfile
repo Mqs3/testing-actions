@@ -1,20 +1,20 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        
-        stage('Use Node.js') {
-            steps {
-                withNPM(npmrcConfig:'my-custom-npmrc') {
-                    echo "Performing npm build..."
-                    sh 'npm install'
+    agent testing{
+        stages {
+            stage('npm-build') {
+                agent {
+                    docker {
+                        image 'node:7.4'
+                    }
+                }
+
+                steps {
+                nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
                 }
             }
         }
+        
     }
 
 }
