@@ -4,12 +4,17 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
+                node{
                 // Construir a imagem Docker
-                script {
-                    docker.withRegistry('https://hub.docker.com/') {
-                        sh 'docker login -u $DOCKER_USERNAME -p DOCKER_PASSWORD'
-                        
+                    script {
+                        withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+
+                            docker.withRegistry('', 'docker-login') {
+                                sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                                myImage.push("${env.BUILD_NUMBER}")
+                                myImage.push("latest")
                     }
+
                 }
             }
         }
