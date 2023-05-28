@@ -7,11 +7,12 @@ pipeline {
                 // Construir a imagem Docker
                 script {
                     docker.withRegistry('https://hub.docker.com/', 'docker-login') {
-                    def dockerImage = docker.build('testing:actions', './Dockerfile')
-                    dockerImage.push()
+                        def dockerImage = docker.build('testing:actions', './Dockerfile')
+                        dockerImage.push()
                     }
                 }
             }
+        }
         
         
         stage('Build') {
