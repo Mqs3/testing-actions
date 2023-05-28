@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                docker.withRegistry('https://docker.com/', 'docker-login') {
-                git '…'
-                docker.build('myapp').push('latest')
+                node {
+                    def myEnv = docker.build 'my-environment:snapshot'
+                    
                 }
             }
         }
