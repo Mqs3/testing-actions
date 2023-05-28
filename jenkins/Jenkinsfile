@@ -7,6 +7,7 @@ pipeline {
                 // Construir a imagem Docker
                 script {
                     docker.withTool('DockerInstalation') {
+                        sh 'docker run --help'
                         // docker.withRegistry('https://hub.docker.com/', 'docker-login'){
                         //     // def customImage = docker.build("myapp:${env.BUILD_ID}")
                         //     // customImage.push()
