@@ -6,14 +6,15 @@ pipeline {
             steps {
                 // Construir a imagem Docker
                 script {
-                    withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        docker.withTool('DockerInstalation') {
-                            sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-                        // def customImage = docker.build("myapp:${env.BUILD_ID}")
-                        // customImage.push()
+                    docker.withTool('DockerInstalation') {
+                        docker.withRegistry('https://hub.docker.com/', 'docker-login'){
+                            // def customImage = docker.build("myapp:${env.BUILD_ID}")
+                            // customImage.push()
 
                         }
+
                     }
+                    
                 }
             }
                 
