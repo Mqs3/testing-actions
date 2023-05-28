@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        agent { dockerfile true }
+    }
 
     stages {
         stage('Login to Docker Hub') {
@@ -8,7 +10,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
-                        withRegistry('https://login.docker.com/', 'docker-login') {
+                        docker.withRegistry('https://login.docker.com/', 'docker-login') {
                             sh "docker login -u ${USERNAME} -p ${PASSWORD}"
                             myImage.push("${env.BUILD_NUMBER}")
                             myImage.push("latest")
