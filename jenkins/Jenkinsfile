@@ -1,5 +1,5 @@
 pipeline {
-    agent docker
+    agent any
 
     stages {
         stage('Login to Docker Hub') {
@@ -7,11 +7,9 @@ pipeline {
                 // Construir a imagem Docker
                 script {
                     withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-
-                        docker.withRegistry('https://login.docker.com/', 'docker-login') {
-                            sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-                            myImage.push("${env.BUILD_NUMBER}")
-                            myImage.push("latest")
+                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                        def customImage = docker.build("myapp:${env.BUILD_ID}")
+                        customImage.push()
                         }
                     }
                 }
