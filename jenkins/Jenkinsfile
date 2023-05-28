@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 nodejs(nodeJSInstallationName: 'NodeInstalation') {
-                    sh 'npm config ls'
+                    sh 'npm run test'
                     sh 'npm --version'
                 }
 
