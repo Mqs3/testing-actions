@@ -10,12 +10,13 @@ pipeline {
                         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
                         def customImage = docker.build("myapp:${env.BUILD_ID}")
                         customImage.push()
-                        }
                     }
                 }
-                
             }
+                
         }
+    }
+
         
         
         stage('Build') {
@@ -26,5 +27,5 @@ pipeline {
                 }
             }
         }
-    }
 }
+
