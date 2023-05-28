@@ -5,7 +5,7 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 
-                docker.withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh "docker login -u ${USERNAME} -p ${PASSWORD}"
                     def customImage = docker.build("myapp:${env.BUILD_ID}")
                     customImage.push()
