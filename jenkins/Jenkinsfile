@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                
+                script{
+                    sh 'docker build -t testing/actions .'
+                }
             }
         }
         
