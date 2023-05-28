@@ -3,8 +3,14 @@ pipeline {
         stages {
             stage('npm-build') {
                 steps {
-                nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
+                nodejs(nodeJSInstallationName: 'Node 17.x', configId: '<config-file-provider-id>') {
                     sh 'npm config ls'
+                    sh 'npm --version'
+                }
+
+                steps{
+                    sh 'npm --version'
+                    sh 'node --version'
                 }
             }
         }
