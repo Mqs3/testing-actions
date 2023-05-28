@@ -4,10 +4,8 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                node {
-                    def myEnv = docker.build 'my-environment:snapshot'
-                    
-                }
+                docker.build 'my-environment:snapshot'
+                
             }
         }
         
