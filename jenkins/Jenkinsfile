@@ -2,12 +2,6 @@ pipeline {
     agent testing{
         stages {
             stage('npm-build') {
-                agent {
-                    docker {
-                        image 'node:7.4'
-                    }
-                }
-
                 steps {
                 nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
                     sh 'npm config ls'
