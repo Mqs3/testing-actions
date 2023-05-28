@@ -4,14 +4,13 @@ pipeline {
     stages {
         stage('Login to Docker Hub') {
             steps {
-                // Construir a imagem Docker
-                script {
-                    docker.withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-                        def customImage = docker.build("myapp:${env.BUILD_ID}")
-                        customImage.push()
-                    }
+                
+                docker.withCredentials([usernamePassword( credentialsId: 'docker-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                    def customImage = docker.build("myapp:${env.BUILD_ID}")
+                    customImage.push()
                 }
+                
             }
                 
         }
