@@ -6,7 +6,8 @@ pipeline {
             steps {
                 // Construir a imagem Docker
                 script {
-                    docker.withRegistry('https://hub.docker.com/', 'docker-login') {
+                    docker.withRegistry('https://hub.docker.com/') {
+                        sh 'docker login -u $DOCKER_USERNAME -p DOCKER_PASSWORD'
                         
                     }
                 }
