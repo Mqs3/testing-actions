@@ -2,13 +2,21 @@ pipeline {
     agent any
 
     stages {
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                }
+            }
+        }
+        
+        
         stage('Build') {
             steps {
                 nodejs(nodeJSInstallationName: 'NodeInstalation') {
                     sh 'npm run test'
                     sh 'npm --version'
                 }
-
             }
         }
     }
