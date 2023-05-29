@@ -10,9 +10,8 @@ pipeline {
                 }
             }
         }
-    }
 
-    stage('Login to Docker Hub') {  
+        stage('Login to Docker Hub') {  
             steps {
                 // Construir a imagem Docker
                 script {
@@ -29,5 +28,8 @@ pipeline {
             }
                 
         }
+    }
+
+    
 }
 
