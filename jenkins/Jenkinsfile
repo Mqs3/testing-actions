@@ -2,39 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Login to Docker Hub') {  
-            steps {
-                // Construir a imagem Docker
-                script {
-                    docker.withTool('DockerInstalation') {
-                        withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                            sh 'docker build -t mikenew/myapp:lts .'
-                            sh 'docker push mikenew/myapp:lts'
-
-                        //     docker.withRegistry('https://hub.docker.com/', 'docker-login'){
-                        //         def customImage = docker.build("myapp:${env.BUILD_ID}")
-                        //         customImage.push()
-
-                        //     }
-                        // }
-                        // docker.withRegistry('https://hub.docker.com/', 'docker-login'){
-                        //     // def customImage = docker.build("myapp:${env.BUILD_ID}")
-                        //     // customImage.push()
-
-                        }
-
-                    }
-                    
-                }
-            }
-                
-        }
-        
-
-        
-        
-        stage('Build') {
+        stage('Testing') {
             steps {
                 nodejs(nodeJSInstallationName: 'NodeInstalation') {
                     sh 'npm run test'
@@ -43,5 +11,23 @@ pipeline {
             }
         }
     }
+
+    stage('Login to Docker Hub') {  
+            steps {
+                // Construir a imagem Docker
+                script {
+                    docker.withTool('DockerInstalation') {
+                        withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                            sh 'docker build -t mikenew/myapp:${BUILD_NUMBER} .'
+                            sh 'docker push mikenew/myapp:$BUILD_NUMBER'
+                        }
+
+                    }
+                    
+                }
+            }
+                
+        }
 }
 
