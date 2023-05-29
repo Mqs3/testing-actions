@@ -18,8 +18,8 @@ pipeline {
                     docker.withTool('DockerInstalation') {
                         withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                             sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                            sh 'docker build -t mikenew/myapp:${BUILD_NUMBER}-$BUILD_ID .'
-                            sh 'docker push mikenew/myapp:$BUILD_NUMBER-$BUILD_ID'
+                            sh 'docker build -t $DOCKER_USERNAME/myapp:$BUILD_TAG .'
+                            sh 'docker push $DOCKER_USERNAME/myapp:$BUILD_TAG'
                         }
 
                     }
