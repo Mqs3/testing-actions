@@ -8,12 +8,13 @@ pipeline {
                 script {
                     docker.withTool('DockerInstalation') {
                         withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            docker.withRegistry('https://hub.docker.com/', 'docker-login'){
-                                def customImage = docker.build("myapp:${env.BUILD_ID}")
-                                customImage.push()
+                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        //     docker.withRegistry('https://hub.docker.com/', 'docker-login'){
+                        //         def customImage = docker.build("myapp:${env.BUILD_ID}")
+                        //         customImage.push()
 
-                            }
-                        }
+                        //     }
+                        // }
                         // docker.withRegistry('https://hub.docker.com/', 'docker-login'){
                         //     // def customImage = docker.build("myapp:${env.BUILD_ID}")
                         //     // customImage.push()
