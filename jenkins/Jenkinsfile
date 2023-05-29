@@ -8,8 +8,8 @@ pipeline {
                 script {
                     docker.withTool('DockerInstalation') {
                         withCredentials([usernamePassword(credentialsId: 'docker-login', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                            //sh 'docker build -t mikenew/myapp:${env.GIT_COMMIT} .'
+                            //sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                            sh 'docker build -t mikenew/myapp:${env.GIT_COMMIT} .'
                             //sh 'docker push mikenew/myapp:${env.GIT_COMMIT}'
 
                         //     docker.withRegistry('https://hub.docker.com/', 'docker-login'){
